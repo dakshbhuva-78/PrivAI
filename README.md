@@ -1,39 +1,119 @@
-# PrivAI — Offline PII Detection & Redaction (Baseline Prototype)
 
-## What it does
-A small local demo that detects common PII patterns in pasted text and produces a redacted version plus a detection report.
+# 🔐 PrivAI — Offline Intelligent Document Privacy Shield
 
-## Important honesty note
-This is a **baseline prototype**, not a fine-tuned Small Language Model (SLM). It currently uses regular expressions for email, Indian mobile number, Aadhaar-like and PAN-like patterns, plus a simple contextual name heuristic. It is useful to demonstrate the workflow and identify the next engineering steps, but it is not production-grade and does not guarantee privacy/security for real records.
+**Detect sensitive information. Protect it locally.**
 
-## Run locally
-1. Install Python 3.10+.
-2. Open a terminal in this folder.
-3. Run:
-   ```bash
-   python -m venv .venv
-   # Windows:
-   .venv\Scripts\activate
-   # macOS/Linux:
-   source .venv/bin/activate
-   pip install -r requirements.txt
-   streamlit run app.py
-   # Optional tiny synthetic smoke test:
-   python evaluate.py
-   ```
-4. Open the local URL printed in the terminal. After dependencies are installed, the app does not call external AI APIs.
+PrivAI is a privacy-focused prototype designed to detect and redact Personally Identifiable Information (PII) from text. It uses local pattern matching and simple contextual heuristics without calling external AI APIs.
 
-## Demo sample
-`Name: Rahul Patel can be contacted at rahul.patel@example.com or +91-9876543210. ID: 1234 5678 9012.`
+## 🚀 Features
 
-## Current limitations
-- Name detection is a simple heuristic and may miss names or flag incorrectly.
-- Address detection and document/PDF upload are not implemented.
-- No SLM fine-tuning, distillation or quantization has been done yet.
-- Do not use with real sensitive documents.
+- 🔍 Detect supported PII patterns in text
+- 🛡️ Redact detected information
+- 📋 Display a detection report with PII types and detected values
+- 🎲 Load different sample sentences for testing
+- 📊 Evaluate the baseline using precision, recall, F1-score, and TP/FP/FN counts
+- 🔒 Process text locally when running the app on your own computer
+- 🧪 Include synthetic smoke tests for basic evaluation
 
-## Next steps
-- Build a labeled PII dataset and train/test split.
-- Add a proper local NER model and compare it with this baseline.
-- Report precision, recall and F1 on a held-out dataset.
-- Add PDF/DOCX input, manual review, and stronger redaction validation.
+## 🧰 Technology Stack
+
+- Python
+- Streamlit
+- Pandas
+- Regular expressions and rule-based detection
+
+## 📂 Project Structure
+
+```text
+PrivAI/
+├── app.py
+├── app_core.py
+├── evaluate.py
+├── requirements.txt
+├── README.md
+├── data/
+│   ├── sample.txt
+│   └── dataset_note.md
+└── run_windows.bat
+```
+
+*Adjust this structure if your actual repository differs.*
+
+## ⚙️ Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR-USERNAME/PrivAI.git
+cd PrivAI
+```
+
+Replace `YOUR-USERNAME` with your GitHub username.
+
+### 2. Create and activate a virtual environment (optional but recommended)
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Run the application
+
+```bash
+python -m streamlit run app.py
+```
+
+Open the local URL shown in the terminal, usually `http://localhost:8501`.
+
+## 📊 Evaluation
+
+The evaluation interface uses a small set of synthetic test cases and reports:
+
+- **Precision:** Proportion of detected items that were correct.
+- **Recall:** Proportion of expected items that were detected.
+- **F1-score:** Harmonic mean of precision and recall.
+- **TP:** True positives.
+- **FP:** False positives.
+- **FN:** False negatives.
+
+These results are preliminary smoke-test measurements, not validated real-world accuracy. The test set is small and does not establish performance on unseen documents.
+
+## 🧠 Current Detection Scope
+
+The baseline is designed to detect supported patterns such as:
+
+- Email addresses
+- Indian mobile numbers
+- Aadhaar-like 12-digit numbers
+- PAN-like identifiers
+- Names matching simple contextual heuristics
+
+Detection depends on the implementation in `app_core.py`. Some names, addresses, group IDs, and other contextual information may be missed. False positives are also possible.
+
+## 🔐 Privacy and Limitations
+
+- When run locally, the prototype processes text in the local Python application and does not call external AI APIs.
+- Avoid entering real sensitive information in demonstrations.
+- If deployed on a hosting platform, text is processed by the hosted application environment rather than your own computer.
+- The current implementation is a rule-based baseline, not a fine-tuned Small Language Model (SLM).
+
+## 🔮 Future Improvements
+
+- Build a larger, labelled PII dataset.
+- Improve context-aware detection.
+- Evaluate precision, recall, and F1-score on a representative test set.
+- Add document upload and additional PII categories.
+- Explore a locally deployed SLM.
+- Investigate model optimization using quantization or distillation.
+
+---
+
+**PrivAI — Detect sensitive information. Protect it locally.**
